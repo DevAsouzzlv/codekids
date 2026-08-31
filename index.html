@@ -224,9 +224,19 @@
             <h2>Seu apoio pode abrir portas para o próximo jovem.</h2>
           </div>
           <div class="cta-actions">
-            <a class="btn btn-primary" href="mailto:contato@codekids.org">Quero apoiar</a>
-            <a class="btn btn-light" href="mailto:voluntario@codekids.org">Quero ser voluntário</a>
+            <button class="btn btn-primary open-form" type="button" data-form-type="support">Quero apoiar</button>
+            <button class="btn btn-light open-form" type="button" data-form-type="volunteer">Quero ser voluntário</button>
           </div>
+        </div>
+      </section>
+
+      <section class="section live-submissions">
+        <div class="container live-submission-panel">
+          <div class="panel-header">
+            <span class="eyebrow eyebrow-gold">Em tempo real</span>
+            <h3>Últimas intenções de apoio</h3>
+          </div>
+          <div id="submission-feed" class="submission-feed" aria-live="polite"></div>
         </div>
       </section>
     </main>
@@ -250,6 +260,47 @@
         <div class="vw-plugin-top-wrapper"></div>
       </div>
     </div>
+    <div id="form-modal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop" data-close="true"></div>
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" type="button" aria-label="Fechar modal" data-close="true">×</button>
+        <div class="modal-header">
+          <span class="eyebrow eyebrow-gold">Contato</span>
+          <h3 id="modal-title">Quero apoiar</h3>
+        </div>
+
+        <form id="support-form">
+          <input type="hidden" id="form-type" name="type" value="support" />
+
+          <label>
+            Nome completo
+            <input type="text" name="name" placeholder="Seu nome" required />
+          </label>
+
+          <div class="form-row">
+            <label>
+              E-mail
+              <input type="email" name="email" placeholder="seu@email.com" required />
+            </label>
+            <label>
+              Telefone
+              <input type="tel" name="phone" placeholder="(11) 99999-9999" />
+            </label>
+          </div>
+
+          <label>
+            Como você quer contribuir?
+            <textarea name="message" rows="4" placeholder="Conte um pouco sobre sua disponibilidade ou intenção." required></textarea>
+          </label>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-light" data-close="true">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
       new window.VLibras.Widget("https://vlibras.gov.br/app");

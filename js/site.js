@@ -1,7 +1,8 @@
 const storageKeys = {
   posts: 'codekidsPosts',
   partners: 'codekidsPartners',
-  darkMode: 'codekidsDarkMode'
+  darkMode: 'codekidsDarkMode',
+  submissions: 'codekidsSubmissions'
 };
 
 const defaultPartners = [
@@ -43,6 +44,11 @@ const defaultPosts = [
 const postsGrid = document.getElementById('posts-grid');
 const partnersGrid = document.getElementById('partners-grid');
 const themeToggle = document.getElementById('theme-toggle');
+const submissionFeed = document.getElementById('submission-feed');
+const formModal = document.getElementById('form-modal');
+const supportForm = document.getElementById('support-form');
+const modalTitle = document.getElementById('modal-title');
+const formTypeInput = document.getElementById('form-type');
 
 function setDefaults() {
   if (!localStorage.getItem(storageKeys.posts)) {
@@ -66,6 +72,10 @@ function getPosts() {
 
 function getPartners() {
   return JSON.parse(localStorage.getItem(storageKeys.partners) || '[]');
+}
+
+function getSubmissions() {
+  return JSON.parse(localStorage.getItem(storageKeys.submissions) || '[]');
 }
 
 function renderPosts() {
@@ -116,6 +126,80 @@ function renderPartners() {
     .join('');
 }
 
+function renderSubmissions() {
+  if (!submissionFeed) return;
+
+  const submissions = getSubmissions();
+
+  if (!submissions.length) {
+    submissionFeed.innerHTML = '<div class="empty-state">Ainda não há intenções registradas. Seja o primeiro a apoiar.</div>';
+    return;
+  }
+
+  submissionFeed.innerHTML = submissions
+    .slice(0, 3)
+    .map(
+      item => `
+        <article class="submission-item">
+          <span>${item.type === 'support' ? 'Apoio' : 'Voluntário'}</span>
+          <h4>${item.name}</h4>
+          <p>${item.message}</p>
+          <small>${new Date(item.createdAt).toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })}</small>
+        </article>
+      `
+    )
+    .join('');
+}
+
+function openFormModal(type) {
+  const nextType = type === 'volunteer' ? 'volunteer' : 'support';
+
+  if (!formModal || !supportForm || !formTypeInput || !modalTitle) return;
+
+  formTypeInput.value = nextType;
+  modalTitle.textContent = nextType === 'support' ? 'Quero apoiar' : 'Quero ser voluntário';
+  formModal.classList.remove('hidden');
+  formModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeFormModal() {
+  if (!formModal) return;
+  formModal.classList.add('hidden');
+  formModal.setAttribute('aria-hidden', 'true');
+}
+
+function handleFormSubmit(event) {
+  event.preventDefault();
+
+  const formData = new FormData(supportForm);
+  const payload = {
+    name: String(formData.get('name') || '').trim(),
+    email: String(formData.get('email') || '').trim(),
+    phone: String(formData.get('phone') || '').trim(),
+    message: String(formData.get('message') || '').trim(),
+    type: String(formData.get('type') || 'support'),
+    createdAt: new Date().toISOString()
+  };
+
+  if (!payload.name || !payload.email || !payload.message) {
+    return;
+  }
+
+  const submissions = getSubmissions();
+  submissions.unshift(payload);
+  localStorage.setItem(storageKeys.submissions, JSON.stringify(submissions));
+
+  supportForm.reset();
+  closeFormModal();
+  renderSubmissions();
+}
+
 function toggleTheme() {
   const enabled = document.body.classList.toggle('dark-mode');
   localStorage.setItem(storageKeys.darkMode, String(enabled));
@@ -128,6 +212,31 @@ if (themeToggle) {
   themeToggle.addEventListener('click', toggleTheme);
 }
 
+const openButtons = document.querySelectorAll('.open-form');
+openButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    openFormModal(button.dataset.formType || 'support');
+  });
+});
+
+if (formModal) {
+  formModal.addEventListener('click', event => {
+    if (event.target && event.target.dataset.close === 'true') {
+      closeFormModal();
+    }
+  });
+}
+
+const modalCloseButtons = document.querySelectorAll('[data-close="true"]');
+modalCloseButtons.forEach(button => {
+  button.addEventListener('click', () => closeFormModal());
+});
+
+if (supportForm) {
+  supportForm.addEventListener('submit', handleFormSubmit);
+}
+
 setDefaults();
 renderPosts();
 renderPartners();
+renderSubmissions();
