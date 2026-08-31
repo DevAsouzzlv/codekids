@@ -191,13 +191,31 @@ function handleFormSubmit(event) {
     return;
   }
 
+  // Salvar no localStorage
   const submissions = getSubmissions();
   submissions.unshift(payload);
   localStorage.setItem(storageKeys.submissions, JSON.stringify(submissions));
 
+  // Enviar para Google Sheets via Apps Script
+  sendToGoogleSheets(payload);
+
   supportForm.reset();
   closeFormModal();
   renderSubmissions();
+}
+
+function sendToGoogleSheets(data) {
+  // IMPORTANTE: Substitua pela URL do seu Google Apps Script
+  const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/d/{SEU_SCRIPT_ID}/usercopy?action=submitForm';
+  
+  fetch(GOOGLE_APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify(data)
+  })
+  .catch(error => {
+    console.error('Erro ao enviar dados para Google Sheets:', error);
+  });
 }
 
 function toggleTheme() {
@@ -234,6 +252,58 @@ modalCloseButtons.forEach(button => {
 
 if (supportForm) {
   supportForm.addEventListener('submit', handleFormSubmit);
+}
+
+// Google Maps Configuration
+function initMap() {
+  const codekidsLocation = { lat: -23.5505, lng: -46.6333 }; // São Paulo, SP
+  
+  const map = new google.maps.Map(document.getElementById('google-map'), {
+    zoom: 14,
+    center: codekidsLocation,
+    styles: [
+      {
+        featureType: 'all',
+        elementType: 'geometry',
+        stylers: [{ color: '#f5f5f5' }]
+      },
+      {
+        featureType: 'water',
+        elementType: 'geometry',
+        stylers: [{ color: '#e0f0f7' }]
+      }
+    ]
+  });
+
+  // Adicionar marker da CodeKids
+  const marker = new google.maps.Marker({
+    position: codekidsLocation,
+    map: map,
+    title: 'CodeKids - Educação Tecnológica para Jovens',
+    animation: google.maps.Animation.DROP
+  });
+
+  // Info window
+  const infoWindow = new google.maps.InfoWindow({
+    content: `
+      <div style="padding: 10px; font-family: Arial; font-size: 14px;">
+        <strong>CodeKids</strong><br>
+        Educação tecnológica para jovens<br>
+        <small>contato@codekids.org</small>
+      </div>
+    `
+  });
+
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
+  });
+}
+
+// Inicializar mapa quando o DOM está pronto
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMap);
+} else {
+  initMap();
 }
 
 setDefaults();

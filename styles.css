@@ -682,3 +682,71 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 }
+
+/* Google Maps Location Section */
+.location-section {
+  background: linear-gradient(135deg, #f7f9ff 0%, #eef5ff 100%);
+  padding: 80px 0;
+}
+
+.map-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+#google-map {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(85, 51, 255, 0.15);
+}
+
+.location-info {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.info-card {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(85, 51, 255, 0.12);
+}
+
+.info-card strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+
+.info-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  #google-map {
+    height: 300px !important;
+  }
+
+  .location-section {
+    padding: 60px 0;
+  }
+}
