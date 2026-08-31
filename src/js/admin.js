@@ -90,6 +90,11 @@ function showLogin() {
   loginView.classList.remove('hidden');
 }
 
+function showLogin() {
+  dashboardView.classList.add('hidden');
+  loginView.classList.remove('hidden');
+}
+
 function resetForm() {
   postForm.reset();
   postId.value = '';
