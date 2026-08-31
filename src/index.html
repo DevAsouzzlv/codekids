@@ -4,265 +4,197 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CodeKids | Educação tecnológica para jovens</title>
-    <meta
-      name="description"
-      content="CodeKids conecta jovens ao mundo da tecnologia por meio de aulas gratuitas, projetos e oportunidades de educação digital."
-    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <header class="topbar">
-      <div class="container nav-wrap">
+      <div class="container nav">
         <a href="#inicio" class="brand" aria-label="CodeKids início">
           <span class="brand-mark">CK</span>
-          <span class="brand-text">CodeKids</span>
+          <span class="brand-text"><strong>CodeKids</strong></span>
         </a>
-
         <nav class="main-nav" aria-label="Navegação principal">
           <a href="#inicio">Início</a>
           <a href="#sobre">Sobre</a>
-          <a href="#aulas">Aulas</a>
+          <a href="#galeria">Projetos</a>
           <a href="#blog">Blog</a>
-          <a href="#parceiros">Parceiros</a>
           <a href="#contato">Contato</a>
         </nav>
-
         <div class="nav-actions">
-          <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">☀️</button>
-          <a class="btn btn-primary" href="#contato">Apoiar</a>
+          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar tema">🌙</button>
+          <a class="button button-primary" href="#contato">Apoiar</a>
         </div>
       </div>
     </header>
 
     <main>
+      <!-- Hero -->
       <section class="hero" id="inicio">
         <div class="container hero-grid">
-          <div class="hero-copy">
-            <span class="eyebrow">Shaping minds. Inspiring futures.</span>
-            <h1>
-              A legacy of<br />
-              excellence.<br />
-              A future of impact.
-            </h1>
-            <p>
-              A CodeKids empodera jovens de escolas públicas com acesso a educação tecnológica,
-              programação, criatividade e oportunidades reais para crescer no mundo digital.
-            </p>
-
+          <div class="hero-copy fade-up">
+            <span class="eyebrow">Moldando mentes. Inspirando futuros.</span>
+            <h1>Um legado de<br />excelência.<br />Um futuro de impacto.</h1>
+            <p>A CodeKids empodera jovens de escolas públicas com acesso a educação tecnológica, programação, criatividade e oportunidades reais para crescer no mundo digital.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#blog">Explore programas</a>
-              <a class="btn btn-light" href="#sobre">Saiba mais</a>
-            </div>
-
-            <div class="hero-meta">
-              <div class="avatar-group" aria-label="Estudantes impactados">
-                <span>J</span>
-                <span>M</span>
-                <span>L</span>
-                <span>+</span>
-              </div>
-              <div>
-                <strong>Join 12,000+ students</strong>
-                <small>From 90+ countries</small>
-              </div>
+              <a class="button button-primary" href="#galeria">Ver Projetos</a>
+              <a class="button button-secondary" href="#sobre">Saiba mais</a>
             </div>
           </div>
-
-          <div class="hero-visual">
-            <div class="hero-image-card">
-              <img
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
-                alt="Grupo de jovens em aula"
-              />
-            </div>
-            <div class="premium-badge">
-              <span class="badge-icon">◌</span>
-              <div>
-                <strong>Ranked among</strong>
-                <small>Top 100 universities</small>
-              </div>
+          <div class="hero-visual fade-up stagger-1">
+            <div class="card-glow" style="padding: 16px;">
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80" alt="Jovens em aula" style="border-radius: 8px;" />
             </div>
           </div>
         </div>
       </section>
 
+      <!-- Sobre -->
       <section class="section section-soft" id="sobre">
         <div class="container about-grid">
-          <div class="about-copy">
-            <span class="eyebrow eyebrow-gold">Quem somos</span>
+          <div class="about-copy fade-up" style="grid-column: span 2;">
+            <span class="eyebrow accent">Quem somos</span>
             <h2>Construindo acesso, talento e futuro.</h2>
-            <p>
-              Nossa missão é reduzir desigualdades no acesso à educação digital. Através de aulas,
-              mentoria e projetos reais, conectamos jovens às ferramentas que abrem portas para o
-              mercado e para a inovação.
-            </p>
-            <p>
-              A tecnologia deixa de ser um privilégio e vira uma ponte para autonomia, criatividade e
-              protagonismo.
-            </p>
-
-            <div class="about-stats">
-              <div>
-                <strong>900+</strong>
-                <span>jovens impactados</span>
-              </div>
-              <div>
-                <strong>42</strong>
-                <span>turmas formadas</span>
-              </div>
-              <div>
-                <strong>18</strong>
-                <span>parceiros ativos</span>
-              </div>
+            <p>Nossa missão é reduzir desigualdades no acesso à educação digital. Através de aulas e projetos reais, conectamos jovens às ferramentas do futuro.</p>
+            <div class="hero-stats">
+              <li><strong>900+</strong><span>jovens impactados</span></li>
+              <li><strong>42</strong><span>turmas formadas</span></li>
+              <li><strong>18</strong><span>parceiros ativos</span></li>
             </div>
           </div>
-
-          <div class="about-visual">
-            <img
-              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80"
-              alt="Jovens em sala de aula fazendo programação"
-            />
+          <div class="about-visual card-glow fade-up stagger-1" style="padding: 12px;">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80" alt="Programação" style="height: 100%; object-fit: cover; border-radius: 8px;" />
           </div>
         </div>
       </section>
 
-      <section class="section" id="aulas">
-        <div class="container">
+      <!-- Jornada -->
+      <section class="section alt" id="jornada">
+        <div class="container fade-up">
           <div class="section-header">
             <div>
-              <span class="eyebrow eyebrow-gold">Como ensinamos</span>
-              <h2>Metodologia prática para aprendizado real.</h2>
+              <span class="eyebrow accent">Nossa Metodologia</span>
+              <h2>Como transformamos o futuro.</h2>
             </div>
           </div>
+          <div class="process-grid">
+            <div class="process-card fade-up">
+              <span class="step-badge">01</span>
+              <h3>Lógica Base</h3>
+              <p>Fundamentos de raciocínio lógico e resolução de problemas criativos.</p>
+              <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80" alt="Lógica" />
+            </div>
+            <div class="process-card fade-up stagger-1">
+              <span class="step-badge">02</span>
+              <h3>Código na Prática</h3>
+              <p>Mão na massa construindo os primeiros sites e aplicativos web.</p>
+              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" alt="Código" />
+            </div>
+            <div class="process-card fade-up stagger-2">
+              <span class="step-badge">03</span>
+              <h3>Projetos Reais</h3>
+              <p>Desenvolvimento de soluções para problemas reais da comunidade local.</p>
+              <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" alt="Projetos" />
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <!-- Projetos -->
+      <section class="section" id="galeria">
+        <div class="container fade-up">
+          <div class="section-header center">
+            <span class="eyebrow accent">Na Prática</span>
+            <h2>Experiências que marcam.</h2>
+          </div>
+          <div class="bento-grid">
+            <div class="bento-item large card-glow fade-up">
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Trabalho em equipe" />
+              <div class="bento-content">
+                <h3>Hackathons Escolares</h3>
+                <p>Maratonas de programação unindo escolas estaduais.</p>
+              </div>
+            </div>
+            <div class="bento-item card-glow fade-up stagger-1">
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Notebook" />
+              <div class="bento-content"><h3>Laboratórios Digitais</h3></div>
+            </div>
+            <div class="bento-item card-glow fade-up stagger-2">
+              <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" alt="Robótica" />
+              <div class="bento-content"><h3>Feira de Robótica</h3></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BLOG: Alimentado pelo Admin -->
+      <section class="section alt" id="blog">
+        <div class="container fade-up">
+          <div class="section-header">
+            <div>
+              <span class="eyebrow">Acompanhe</span>
+              <h2>Últimas Notícias e Formaturas</h2>
+            </div>
+          </div>
+          <div id="posts-grid" class="posts-grid" aria-live="polite">
+            <!-- Posts serão injetados via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Depoimentos -->
+      <section class="section" id="depoimentos">
+        <div class="container fade-up">
+          <div class="section-header center">
+            <span class="eyebrow accent">Impacto Real</span>
+            <h2>O que dizem sobre nós</h2>
+          </div>
           <div class="feature-grid">
-            <article class="feature-card">
-              <div class="feature-icon">⌁</div>
-              <h3>Lógica e raciocínio</h3>
-              <p>Desenvolvemos pensamento crítico com resolução de problemas e criatividade aplicada.</p>
+            <article class="feature-card fade-up">
+              <p style="font-style: italic;">"A CodeKids mudou a visão do meu filho. Antes ele passava o dia jogando, hoje ele cria os próprios jogos e sonha em fazer faculdade."</p>
+              <h3 style="margin-top: 16px; font-size: 1.1rem;">Maria Souza</h3>
+              <span style="color: var(--muted); font-size: 0.85rem;">Mãe de aluno, Turma 2024</span>
             </article>
-            <article class="feature-card">
-              <div class="feature-icon">&lt;/&gt;</div>
-              <h3>Programação aplicada</h3>
-              <p>Os estudantes criam projetos digitais, protótipos e experiências reais de tecnologia.</p>
+            <article class="feature-card fade-up stagger-1">
+              <p style="font-style: italic;">"O mercado precisa de talentos diversos e a CodeKids prepara essa garotada com excelência técnica e muita vontade de aprender."</p>
+              <h3 style="margin-top: 16px; font-size: 1.1rem;">Carlos Mendes</h3>
+              <span style="color: var(--muted); font-size: 0.85rem;">Tech Lead, Empresa Parceira</span>
             </article>
-            <article class="feature-card">
-              <div class="feature-icon">✦</div>
-              <h3>Robótica e inovação</h3>
-              <p>Aprendem com experimentação, prototipagem e pensamento criativo em equipe.</p>
+            <article class="feature-card fade-up stagger-2">
+              <p style="font-style: italic;">"Comecei aprendendo HTML básico na ONG e hoje consegui minha primeira vaga como Jovem Aprendiz em TI. Gratidão eterna!"</p>
+              <h3 style="margin-top: 16px; font-size: 1.1rem;">Lucas A.</h3>
+              <span style="color: var(--muted); font-size: 0.85rem;">Ex-aluno</span>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section code-panel">
-        <div class="container code-panel-inner">
-          <div class="code-copy">
-            <span class="eyebrow eyebrow-gold">Learning by building</span>
-            <h2>Technology that turns curiosity into capability.</h2>
+      <!-- Parceiros (Página de Transparência Embutida) -->
+      <section class="section alt" id="parceiros">
+        <div class="container fade-up">
+          <div class="section-header center">
+            <span class="eyebrow accent">Transparência</span>
+            <h2>Nossos Parceiros Atuais</h2>
           </div>
-          <div class="code-window" aria-label="Exemplo de código de programação">
-            <div class="code-header">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-            </div>
-            <pre><code>for aluno in turma:
-    aprender(programacao)
-    criar_solucao()
-    transformar_ideia()</code></pre>
+          <div id="partners-grid" class="partners-grid" aria-live="polite">
+            <!-- Parceiros injetados via JS -->
           </div>
         </div>
       </section>
 
-      <section class="section" id="blog">
-        <div class="container">
-          <div class="section-header split-header">
-            <div>
-              <span class="eyebrow eyebrow-gold">Blog & notícias</span>
-              <h2>Histórias do projeto e das aulas.</h2>
-            </div>
-          </div>
-          <div id="posts-grid" class="posts-grid" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section class="section partners-section" id="parceiros">
-        <div class="container">
-          <div class="section-header">
-            <span class="eyebrow eyebrow-gold">Parceiros</span>
-            <h2>Quem apoia nosso trabalho.</h2>
-          </div>
-          <div id="partners-grid" class="partners-grid" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section class="section quote-section">
-        <div class="container quote-wrap">
-          <div class="quote-copy">
-            <span class="eyebrow eyebrow-gold">Depoimento</span>
-            <h2>“A CodeKids me mostrou que tecnologia também é caminho de pertencimento.”</h2>
-            <p>Maria, 16 anos — estudante do programa</p>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80"
-            alt="Estudante sorrindo"
-          />
-        </div>
-      </section>
-
+      <!-- CTA -->
       <section class="section cta-section" id="contato">
-        <div class="container cta-box">
+        <div class="container cta-box fade-up">
           <div>
-            <span class="eyebrow eyebrow-cta">Faça parte</span>
-            <h2>Seu apoio pode abrir portas para o próximo jovem.</h2>
+            <span class="eyebrow cta-eyebrow">Faça parte</span>
+            <h2 class="cta-title">Seu apoio pode abrir portas.</h2>
           </div>
           <div class="cta-actions">
-            <button class="btn btn-primary open-form" type="button" data-form-type="support">Quero apoiar</button>
-            <button class="btn btn-light open-form" type="button" data-form-type="volunteer">Quero ser voluntário</button>
+            <button class="button button-transparent open-form" type="button" data-form-type="support">Quero apoiar</button>
+            <button class="button button-solid open-form" type="button" data-form-type="volunteer">Quero ser voluntário</button>
           </div>
-        </div>
-      </section>
-
-      <section class="section location-section">
-        <div class="container">
-          <div class="section-header">
-            <span class="eyebrow eyebrow-gold">Onde estamos</span>
-            <h2>Localize a CodeKids</h2>
-          </div>
-          <div id="map-container" class="map-container">
-            <div id="google-map" style="width: 100%; height: 400px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"></div>
-            <div class="location-info">
-              <div class="info-card">
-                <strong>📍 Endereço</strong>
-                <p>São Paulo, SP - Brasil</p>
-              </div>
-              <div class="info-card">
-                <strong>📧 Email</strong>
-                <p>contato@codekids.org</p>
-              </div>
-              <div class="info-card">
-                <strong>📞 Telefone</strong>
-                <p>+55 (11) 4000-0000</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section live-submissions">
-        <div class="container live-submission-panel">
-          <div class="panel-header">
-            <span class="eyebrow eyebrow-gold">Em tempo real</span>
-            <h3>Últimas intenções de apoio</h3>
-          </div>
-          <div id="submission-feed" class="submission-feed" aria-live="polite"></div>
         </div>
       </section>
     </main>
@@ -270,68 +202,32 @@
     <footer class="footer">
       <div class="container footer-inner">
         <div>
-          <strong>CodeKids</strong>
-          <p>Educação tecnológica para jovens de escolas públicas.</p>
-        </div>
-        <div class="footer-contact">
-          <span>contato@codekids.org</span>
-          <span>+55 (11) 4000-0000</span>
+          <strong style="font-size: 1.2rem;">CodeKids</strong>
+          <p style="margin-top: 8px;">Educação tecnológica para jovens.</p>
         </div>
       </div>
     </footer>
 
-    <div vw class="enabled">
-      <div vw-access-button class="active"></div>
-      <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
-      </div>
-    </div>
+    <!-- Modal Formulário -->
     <div id="form-modal" class="modal hidden" aria-hidden="true">
-      <div class="modal-backdrop" data-close="true"></div>
-      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <button class="modal-close" type="button" aria-label="Fechar modal" data-close="true">×</button>
+      <div class="modal-backdrop" data-close="true" style="position: absolute; inset: 0;"></div>
+      <div class="modal-card" role="dialog">
+        <button class="close-button" type="button" aria-label="Fechar modal" data-close="true">×</button>
         <div class="modal-header">
-          <span class="eyebrow eyebrow-gold">Contato</span>
-          <h3 id="modal-title">Quero apoiar</h3>
+          <span class="eyebrow accent">Contato</span>
+          <h3 id="modal-title" style="margin-top: 12px; font-size: 1.8rem; color: var(--primary);">Quero apoiar</h3>
         </div>
-
-        <form id="support-form">
+        <form id="support-form" class="auth-form">
           <input type="hidden" id="form-type" name="type" value="support" />
-
-          <label>
-            Nome completo
-            <input type="text" name="name" placeholder="Seu nome" required />
-          </label>
-
-          <div class="form-row">
-            <label>
-              E-mail
-              <input type="email" name="email" placeholder="seu@email.com" required />
-            </label>
-            <label>
-              Telefone
-              <input type="tel" name="phone" placeholder="(11) 99999-9999" />
-            </label>
-          </div>
-
-          <label>
-            Como você quer contribuir?
-            <textarea name="message" rows="4" placeholder="Conte um pouco sobre sua disponibilidade ou intenção." required></textarea>
-          </label>
-
-          <div class="modal-actions">
-            <button type="button" class="btn btn-light" data-close="true">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+          <label>Nome completo <input type="text" name="name" required /></label>
+          <label>E-mail <input type="email" name="email" required /></label>
+          <label>Mensagem <textarea name="message" rows="4" required></textarea></label>
+          <div class="form-actions">
+            <button type="submit" class="button button-primary full">Enviar</button>
           </div>
         </form>
       </div>
     </div>
-
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-      new window.VLibras.Widget("https://vlibras.gov.br/app");
-    </script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDummy_Replace_With_Your_API_Key&callback=initMap"></script>
     <script src="js/site.js"></script>
   </body>
 </html>

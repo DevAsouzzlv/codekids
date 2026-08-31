@@ -1,244 +1,171 @@
-const storageKeys = {
-  posts: 'codekidsPosts',
-  partners: 'codekidsPartners',
-  adminUser: 'codekidsAdminUser',
-  adminPassword: 'codekidsAdminPassword',
-  darkMode: 'codekidsDarkMode'
-};
-
-const defaultCredentials = {
-  username: 'codekids',
-  password: 'codekids123'
-};
-
-const loginView = document.getElementById('login-view');
-const dashboardView = document.getElementById('dashboard-view');
-const loginForm = document.getElementById('login-form');
-const logoutButton = document.getElementById('logout-button');
-const themeToggle = document.getElementById('theme-toggle');
-const postForm = document.getElementById('post-form');
-const postList = document.getElementById('admin-post-list');
-const postCount = document.getElementById('post-count');
-const formTitle = document.getElementById('form-title');
-const postId = document.getElementById('post-id');
-const postTitle = document.getElementById('post-title');
-const postExcerpt = document.getElementById('post-excerpt');
-const postCategory = document.getElementById('post-category');
-const postContent = document.getElementById('post-content');
-const postImageInput = document.getElementById('post-image');
-const imagePreview = document.getElementById('image-preview');
-const cancelEditBtn = document.getElementById('cancel-edit');
-
-function setDefaultCredentials() {
-  if (!localStorage.getItem(storageKeys.adminUser)) {
-    localStorage.setItem(storageKeys.adminUser, defaultCredentials.username);
-  }
-
-  if (!localStorage.getItem(storageKeys.adminPassword)) {
-    localStorage.setItem(storageKeys.adminPassword, defaultCredentials.password);
-  }
-
-  const enabled = localStorage.getItem(storageKeys.darkMode) === 'true';
-  if (enabled) {
-    document.body.classList.add('dark-mode');
-    if (themeToggle) themeToggle.textContent = '☀️';
-  }
+// Tema
+const themeToggleBtn = document.getElementById('theme-toggle');
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark-mode');
+  if(themeToggleBtn) themeToggleBtn.textContent = '☀️';
 }
+if(themeToggleBtn) {
+  themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
+  });
+}
+
+// Controle de Telas (Login / Dashboard)
+const loginSection = document.getElementById('login-section');
+const dashSection = document.getElementById('dashboard-section');
+const loginForm = document.getElementById('login-form');
+const logoutBtn = document.getElementById('logout-btn');
+
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const pass = document.getElementById('admin-password').value;
+  if(pass === 'admin123') { 
+    // Oculta login e mostra painel (reforçado)
+    loginSection.classList.add('hidden');
+    loginSection.style.display = 'none'; // Garante que suma
+    dashSection.classList.remove('hidden');
+    dashSection.classList.add('visible');
+    renderAdminPosts();
+  } else {
+    alert('Senha incorreta! Para testar, use: admin123');
+  }
+});
+
+logoutBtn.addEventListener('click', () => {
+  dashSection.classList.add('hidden');
+  loginSection.classList.remove('hidden');
+  loginSection.style.display = ''; // Volta a aparecer
+  document.getElementById('admin-password').value = '';
+});
+
+// CRUD do CMS (Blog)
+const postForm = document.getElementById('post-form');
+const listContainer = document.getElementById('admin-posts-list');
+let currentBase64 = '';
+
+// Conversor de Upload de Arquivo para Base64
+document.getElementById('post-image-file').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onloadend = function() {
+    currentBase64 = reader.result;
+  }
+  reader.readAsDataURL(file);
+});
 
 function getPosts() {
-  return JSON.parse(localStorage.getItem(storageKeys.posts) || '[]');
+  return JSON.parse(localStorage.getItem('codekidsPosts') || '[]');
 }
 
+function savePosts(posts) {
+  localStorage.setItem('codekidsPosts', JSON.stringify(posts));
+  renderAdminPosts();
+}
+
+// Ler
 function renderAdminPosts() {
   const posts = getPosts();
-  postCount.textContent = String(posts.length);
-
-  if (!posts.length) {
-    postList.innerHTML = '<div class="admin-card"><p>Nenhuma notícia cadastrada.</p></div>';
+  if(!posts.length) {
+    listContainer.innerHTML = '<p style="color:var(--muted)">Nenhuma postagem encontrada.</p>';
     return;
   }
-
-  postList.innerHTML = posts
-    .slice()
-    .reverse()
-    .map(
-      post => `
-        <article class="admin-card">
-          <div class="post-meta">
-            <span>${post.date}</span>
-            <span>${post.category || 'Notícia'}</span>
-          </div>
-          <h4>${post.title}</h4>
-          <p>${post.excerpt}</p>
-          <div class="card-actions">
-            <button class="action-btn edit" data-action="edit" data-id="${post.id}">Editar</button>
-            <button class="action-btn delete" data-action="delete" data-id="${post.id}">Excluir</button>
-          </div>
-        </article>
-      `
-    )
-    .join('');
+  listContainer.innerHTML = posts.slice().reverse().map(p => `
+    <div class="admin-list-item">
+      <div class="admin-item-content">
+        <img src="${p.image}" alt="Thumb" />
+        <div>
+          <strong style="display:block; color:var(--text);">${p.title}</strong>
+          <small style="color:var(--muted)">${p.date}</small>
+        </div>
+      </div>
+      <div>
+        <button class="action-btn edit" onclick="editPost('${p.id}')">Editar</button>
+        <button class="action-btn delete" onclick="deletePost('${p.id}')">Excluir</button>
+      </div>
+    </div>
+  `).join('');
 }
 
-function showDashboard() {
-  loginView.classList.add('hidden');
-  dashboardView.classList.remove('hidden');
+// Criar / Atualizar
+postForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const idInput = document.getElementById('edit-id').value;
+  const title = document.getElementById('post-title').value;
+  const excerpt = document.getElementById('post-excerpt').value;
+  
+  let posts = getPosts();
+  
+  if (idInput) {
+    // Modo Edição
+    posts = posts.map(p => {
+      if (p.id === idInput) {
+        return {
+          ...p,
+          title,
+          excerpt,
+          image: currentBase64 || p.image // Atualiza imagem só se mandou nova
+        }
+      }
+      return p;
+    });
+  } else {
+    // Modo Criação
+    const finalImage = currentBase64 || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80';
+    const now = new Date();
+    const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    const dateStr = `${now.getDate()} de ${months[now.getMonth()]}, ${now.getFullYear()}`;
+
+    posts.push({
+      id: crypto.randomUUID(),
+      title,
+      excerpt,
+      image: finalImage,
+      date: dateStr
+    });
+  }
+
+  savePosts(posts);
+  resetForm();
+});
+
+// Deletar
+window.deletePost = function(id) {
+  if(confirm('Tem certeza que deseja excluir esta notícia?')) {
+    let posts = getPosts();
+    posts = posts.filter(p => p.id !== id);
+    savePosts(posts);
+  }
 }
 
-function showLogin() {
-  dashboardView.classList.add('hidden');
-  loginView.classList.remove('hidden');
+// Preparar Edição
+window.editPost = function(id) {
+  const posts = getPosts();
+  const post = posts.find(p => p.id === id);
+  if(!post) return;
+  
+  document.getElementById('edit-id').value = post.id;
+  document.getElementById('post-title').value = post.title;
+  document.getElementById('post-excerpt').value = post.excerpt;
+  document.getElementById('form-cms-title').textContent = 'Editar Notícia';
+  document.getElementById('btn-save').textContent = 'Salvar Alterações';
+  document.getElementById('btn-cancel').classList.remove('hidden');
+  currentBase64 = ''; 
+  
+  window.scrollTo(0, 0);
 }
 
-function showLogin() {
-  dashboardView.classList.add('hidden');
-  loginView.classList.remove('hidden');
-}
+// Cancelar
+document.getElementById('btn-cancel').addEventListener('click', resetForm);
 
 function resetForm() {
   postForm.reset();
-  postId.value = '';
-  formTitle.textContent = 'Nova notícia';
-  imagePreview.classList.add('hidden');
-  imagePreview.src = '';
-}
-
-function getPostFormData() {
-  const image = imagePreview.src || 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80';
-
-  return {
-    id: postId.value || crypto.randomUUID(),
-    title: postTitle.value.trim(),
-    excerpt: postExcerpt.value.trim(),
-    category: postCategory.value,
-    content: postContent.value.trim(),
-    image,
-    date: new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })
-  };
-}
-
-function savePost(event) {
-  event.preventDefault();
-
-  const data = getPostFormData();
-
-  if (!data.title || !data.excerpt || !data.content) {
-    alert('Preencha todos os campos da notícia antes de salvar.');
-    return;
-  }
-
-  const posts = getPosts();
-  const index = posts.findIndex(item => item.id === data.id);
-
-  if (index >= 0) {
-    posts[index] = { ...posts[index], ...data };
-  } else {
-    posts.push(data);
-  }
-
-  localStorage.setItem(storageKeys.posts, JSON.stringify(posts));
-  renderAdminPosts();
-  resetForm();
-  if (window.parent && window.parent.location) {
-    window.parent.location.reload();
-  }
-}
-
-function editPost(id) {
-  const target = getPosts().find(item => item.id === id);
-  if (!target) return;
-
-  postId.value = target.id;
-  postTitle.value = target.title;
-  postExcerpt.value = target.excerpt;
-  postCategory.value = target.category || 'Notícia';
-  postContent.value = target.content;
-  formTitle.textContent = 'Editar notícia';
-
-  if (target.image) {
-    imagePreview.src = target.image;
-    imagePreview.classList.remove('hidden');
-  }
-}
-
-function deletePost(id) {
-  const posts = getPosts().filter(item => item.id !== id);
-  localStorage.setItem(storageKeys.posts, JSON.stringify(posts));
-  renderAdminPosts();
-
-  if (postId.value === id) {
-    resetForm();
-  }
-}
-
-function handleAdminActions(event) {
-  const target = event.target.closest('[data-action]');
-  if (!target) return;
-
-  const { action, id } = target.dataset;
-  if (action === 'edit') editPost(id);
-  if (action === 'delete') deletePost(id);
-}
-
-function handleLogin(event) {
-  event.preventDefault();
-
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value.trim();
-
-  const validUser = localStorage.getItem(storageKeys.adminUser) === username;
-  const validPassword = localStorage.getItem(storageKeys.adminPassword) === password;
-
-  if (!validUser || !validPassword) {
-    alert('Usuário ou senha inválidos.');
-    return;
-  }
-
-  sessionStorage.setItem('codekidsAuth', 'true');
-  showDashboard();
-  document.getElementById('password').value = '';
-}
-
-function handleLogout() {
-  sessionStorage.removeItem('codekidsAuth');
-  showLogin();
-  resetForm();
-}
-
-function handleImageUpload(event) {
-  const file = event.target.files?.[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    imagePreview.src = String(reader.result);
-    imagePreview.classList.remove('hidden');
-  };
-  reader.readAsDataURL(file);
-}
-
-function toggleTheme() {
-  const enabled = document.body.classList.toggle('dark-mode');
-  localStorage.setItem(storageKeys.darkMode, String(enabled));
-  if (themeToggle) themeToggle.textContent = enabled ? '☀️' : '🌙';
-}
-
-if (themeToggle) {
-  themeToggle.addEventListener('click', toggleTheme);
-}
-
-loginForm.addEventListener('submit', handleLogin);
-logoutButton.addEventListener('click', handleLogout);
-postList.addEventListener('click', handleAdminActions);
-postForm.addEventListener('submit', savePost);
-cancelEditBtn.addEventListener('click', resetForm);
-postImageInput.addEventListener('change', handleImageUpload);
-
-setDefaultCredentials();
-renderAdminPosts();
-
-if (sessionStorage.getItem('codekidsAuth') === 'true') {
-  showDashboard();
-} else {
-  showLogin();
+  document.getElementById('edit-id').value = '';
+  document.getElementById('form-cms-title').textContent = 'Adicionar Nova Notícia';
+  document.getElementById('btn-save').textContent = 'Publicar Notícia';
+  document.getElementById('btn-cancel').classList.add('hidden');
+  currentBase64 = '';
 }
