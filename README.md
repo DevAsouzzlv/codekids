@@ -10,11 +10,35 @@ Este projeto simula o site da ONG CodeKids, com:
 - **integração com Google Maps** para localização
 - **integração com Google Sheets** para coleta de dados via formulário
 
+## 📁 Estrutura do Projeto
+
+```
+codekids/
+├── src/                    # Código-fonte do projeto
+│   ├── index.html         # Página principal
+│   ├── admin.html         # Painel administrativo
+│   ├── css/
+│   │   └── styles.css     # Estilos globais
+│   └── js/
+│       ├── site.js        # Lógica do site
+│       └── admin.js       # Lógica do admin
+├── docs/                  # Documentação
+│   ├── INTEGRACAO_GOOGLE.md
+│   ├── RESUMO_INTEGRACAO.md
+│   └── google-apps-script-codigo.js
+├── README.md
+├── .gitignore
+└── package.json (opcional)
+```
+
 ## Como executar
 
-A forma mais simples é abrir o arquivo `index.html` no navegador.
+### Opção 1: Abrir no navegador (mais simples)
 
-Se preferir um servidor local:
+1. Abra o arquivo `src/index.html` diretamente no navegador
+2. Para acessar o painel admin, clique em "Apoiar" e depois em "Acesso do corpo pedagógico"
+
+### Opção 2: Com servidor local (recomendado)
 
 ```bash
 cd "c:\Users\Aluno Tech\Documents\Arthur Souza"
@@ -24,7 +48,13 @@ python -m http.server 8000
 Depois acesse:
 
 ```text
-http://localhost:8000
+http://localhost:8000/src/
+```
+
+Se preferir outra porta:
+
+```bash
+python -m http.server 3000
 ```
 
 ## Login demo
@@ -54,24 +84,9 @@ Este projeto agora inclui integração com serviços Google:
 
 1. **Obtenha uma chave de API do Google Maps** no [Google Cloud Console](https://console.cloud.google.com/)
 2. **Crie uma planilha Google** para receber os dados
-3. **Configure o Google Apps Script** com o código fornecido em `google-apps-script-codigo.js`
+3. **Configure o Google Apps Script** com o código fornecido em `docs/google-apps-script-codigo.js`
 
-Para instruções completas, consulte o arquivo **`INTEGRACAO_GOOGLE.md`**
-
-## Estrutura do Projeto
-
-```
-.
-├── index.html              # Página principal
-├── admin.html              # Painel administrativo
-├── app.js                  # Lógica do painel admin
-├── styles.css              # Estilos CSS
-├── css/
-│   └── site.css           # Estilos adicionais
-├── js/
-│   ├── site.js            # Lógica do site (incluindo Google Maps e Sheets)
-│   └── admin.js           # Lógica do admin
-├── INTEGRACAO_GOOGLE.md   # Guia de integração
-├── google-apps-script-codigo.js  # Código Google Apps Script
-└── README.md              # Este arquivo
-```
+Para instruções completas, consulte:
+- **`docs/INTEGRACAO_GOOGLE.md`** - Guia passo a passo
+- **`docs/RESUMO_INTEGRACAO.md`** - Resumo executivo
+- **`docs/google-apps-script-codigo.js`** - Código pronto para copiar/colar
