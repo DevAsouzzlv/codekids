@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administração | CodeKids</title>
+    <meta name="description" content="Painel administrativo da ONG CodeKids para publicar notícias e aulas." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@govbr/dsgov@latest/dist/dsgov.min.css" />
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body class="admin-page">
+    <div class="topbar topbar-admin">
+      <div class="container nav">
+        <a class="brand" href="index.html">
+          <span class="brand-mark">CK</span>
+          <div>
+            <strong>CodeKids</strong>
+            <small>Administração</small>
+          </div>
+        </a>
+
+        <div class="nav-actions">
+          <button class="button button-secondary" id="theme-toggle" aria-label="Alternar tema">🌙</button>
+          <a class="button button-nav" href="index.html">Voltar ao site</a>
+        </div>
+      </div>
+    </div>
+
+    <main class="admin-main">
+      <div class="login-wrapper" id="login-view">
+        <div class="auth-card gov-card">
+          <span class="eyebrow eyebrow-gov">Área restrita</span>
+          <h1>Acesso do corpo pedagógico</h1>
+          <p>Faça login para criar, editar e excluir notícias do blog.</p>
+
+          <form id="login-form" class="auth-form">
+            <label>
+              Usuário
+              <input id="username" type="text" value="codekids" autocomplete="username" />
+            </label>
+
+            <label>
+              Senha
+              <input id="password" type="password" placeholder="Digite sua senha" autocomplete="current-password" />
+            </label>
+
+            <button type="submit" class="button button-primary full">Entrar</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="dashboard hidden" id="dashboard-view">
+        <div class="container dashboard-shell">
+          <header class="dashboard-header">
+            <div>
+              <span class="eyebrow eyebrow-gov">CMS</span>
+              <h2>Gerenciamento de notícias</h2>
+            </div>
+            <button class="button button-secondary" id="logout-button">Sair</button>
+          </header>
+
+          <div class="admin-grid">
+            <section class="gov-card form-panel">
+              <h3 id="form-title">Nova notícia</h3>
+
+              <form id="post-form" class="post-form">
+                <input type="hidden" id="post-id" />
+
+                <label>
+                  Título
+                  <input id="post-title" type="text" maxlength="90" required />
+                </label>
+
+                <label>
+                  Resumo
+                  <input id="post-excerpt" type="text" maxlength="180" required />
+                </label>
+
+                <label>
+                  Categoria
+                  <select id="post-category">
+                    <option value="Aula">Aula</option>
+                    <option value="Evento">Evento</option>
+                    <option value="Impacto">Impacto</option>
+                    <option value="Notícia">Notícia</option>
+                  </select>
+                </label>
+
+                <label>
+                  Conteúdo
+                  <textarea id="post-content" rows="7" required></textarea>
+                </label>
+
+                <label>
+                  Imagem da publicação
+                  <input id="post-image" type="file" accept="image/*" />
+                </label>
+
+                <img id="image-preview" class="image-preview hidden" alt="Pré-visualização da imagem" />
+
+                <div class="form-actions">
+                  <button type="submit" class="button button-primary">Salvar notícia</button>
+                  <button type="button" class="button button-secondary" id="cancel-edit">Cancelar</button>
+                </div>
+              </form>
+            </section>
+
+            <aside class="gov-card list-panel">
+              <div class="list-header">
+                <h3>Publicações</h3>
+                <span id="post-count" class="count-badge">0</span>
+              </div>
+              <div id="admin-post-list" class="admin-post-list"></div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@govbr/dsgov@latest/dist/dsgov.min.js"></script>
+    <script src="js/admin.js"></script>
+  </body>
+</html>
