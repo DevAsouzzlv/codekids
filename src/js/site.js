@@ -87,3 +87,40 @@ if(formModal) {
 setDefaultStorage();
 renderSiteData();
 setTimeout(() => { document.querySelectorAll('.fade-up').forEach(el => observer.observe(el)); }, 100);
+
+// ==========================================
+// INTEGRAÇÃO DO FORMULÁRIO COM O GOOGLE SHEETS
+// ==========================================
+const supportForm = document.getElementById('support-form');
+
+// O seu link gerado no Apps Script
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxTNAXqmzAibZnHmjgMuMHcBzX44OtXqavXEj6hgPr1WWK_Swjb_1kkKuhQJLg5_xTZ0Q/exec'; 
+
+if (supportForm) {
+  supportForm.addEventListener('submit', e => {
+    e.preventDefault(); 
+    
+    const submitBtn = supportForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    submitBtn.textContent = 'Enviando...';
+    submitBtn.disabled = true;
+
+    const formData = new FormData(supportForm);
+
+    fetch(scriptURL, { method: 'POST', body: formData })
+      .then(response => {
+        alert('Obrigado! Recebemos sua mensagem com sucesso.');
+        supportForm.reset(); 
+        document.getElementById('form-modal').classList.add('hidden'); 
+      })
+      .catch(error => {
+        alert('Erro ao enviar. Tente novamente mais tarde.');
+        console.error('Erro!', error.message);
+      })
+      .finally(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      });
+  });
+}
